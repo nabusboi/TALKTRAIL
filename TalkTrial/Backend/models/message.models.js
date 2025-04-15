@@ -1,23 +1,17 @@
 import mongoose from "mongoose";
-import User from "./user.models.js";
 
-const messageSchema = new mongoose.Schema({
-    senderId:{
+const conversationSchema = new mongoose.Schema({
+    participants: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    receiverId:{
+        ref: 'User'
+    }],
+    messages: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    message:{
-        type: String,
-        required: true
-    }
-}, {timestamps: true}) // {timestamps: true} creates created and updated at timestamps
+        ref: 'Message',
+        default: [],
+    }]
+}, { timestamps: true });
 
-const Message = mongoose.model("Message", messageSchema)
+const Conversation = mongoose.model("Conversation", conversationSchema);
 
-export default Message
+export default Conversation;
